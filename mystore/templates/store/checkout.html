@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Store</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2f3;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8em;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-summary {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .product-summary img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #f8f8f8;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 1.5em;
+            margin: 10px 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.2em;
+            color: #28a745;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 1em;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 25px;
+            text-align: center;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .confirm {
+            background: linear-gradient(135deg, #28a745, #45d97b);
+        }
+
+        .confirm:hover {
+            background: linear-gradient(135deg, #45d97b, #28a745);
+        }
+
+        .back {
+            background: linear-gradient(135deg, #ff4b1f, #ff9068);
+        }
+
+        .back:hover {
+            background: linear-gradient(135deg, #ff9068, #ff4b1f);
+        }
+
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 30px;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <h2>Order Summary</h2>
+            <div class="product-summary">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <div class="product-details">
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-price">Price: ₹{{ product.price }}</div>
+                    <p>{{ product.desc }}</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <form method="POST" action="{% url 'confirm_order' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit" class="btn confirm">Confirm Purchase</button>
+                </form>                
+                <a href="{% url 'home' %}" class="btn back">Back to Store</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

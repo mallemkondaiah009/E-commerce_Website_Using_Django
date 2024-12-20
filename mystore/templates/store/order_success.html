@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 50px;
+            background-color: #eef2f3;
+        }
+        h1 {
+            color: #28a745;
+        }
+        p {
+            color: #555;
+            font-size: 1.2em;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+        }
+    </style>
+</head>
+<body>
+    <h1>Thank You for Your Purchase!</h1>
+    <p>Your order has been successfully placed for <strong>{{ product.name }}</strong>.</p>
+    <a href="{% url 'home' %}">Back to Home</a>
+</body>
+</html>
