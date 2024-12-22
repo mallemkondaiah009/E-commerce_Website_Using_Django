@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
 from .product import Product
 from .models import UserRegistration
@@ -6,6 +6,15 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import UserRegistration  # Your custom user model
 from django.contrib.auth.hashers import check_password  # For password validation
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password
+from .models import UserRegistration
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth.hashers import check_password
+from .models import UserRegistration
+
 
 # Create your views here.
 def home(request):
@@ -13,10 +22,6 @@ def home(request):
     return render(request,'store/home.html',{'products':products})
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.hashers import make_password
-from .models import UserRegistration
 
 def register_view(request):
     if request.method == "POST":
@@ -58,10 +63,7 @@ def register_view(request):
 
 
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.contrib.auth.hashers import check_password
-from .models import UserRegistration
+
 
 def login_view(request):
     if request.method == "POST":
@@ -96,11 +98,6 @@ def logout_view(request):
 
 
 
-from django.shortcuts import render, redirect
-
-from django.shortcuts import render, get_object_or_404
-from .product import Product
-
 def cart_view(request):
     cart = request.session.get('cart', {})
     cart_items = []
@@ -120,9 +117,6 @@ def cart_view(request):
 
     return render(request, 'store/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
-
-from django.shortcuts import redirect, get_object_or_404
-from .product import Product  # Assuming you have a Product model with an image field
 
 def add_to_cart(request, product_id):
     # Retrieve the cart from the session, or initialize it if not present
@@ -151,9 +145,6 @@ def add_to_cart(request, product_id):
 
 
 
-from django.shortcuts import redirect
-from django.contrib import messages
-
 def remove_from_cart(request, item_id):
     # Assuming you have a Cart model or session-based cart logic
     cart = request.session.get('cart', {})
@@ -170,15 +161,11 @@ def checkout(request, product_id):
     product = Product.objects.get(id=product_id)  # Fetch product from the database
     return render(request, 'store/checkout.html', {'product': product})
 
-from django.shortcuts import render, redirect, get_object_or_404
-from .product import Product
 
 def confirm_order(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
         product = get_object_or_404(Product, id=product_id)
-        # Logic to save order details or process the order
-        # For now, redirect to a success page
         return render(request, 'store/order_success.html', {'product': product})
     return redirect('home')  # Redirect to the home page for non-POST requests
 
