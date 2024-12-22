@@ -21,6 +21,6 @@ admin.site.register(UserRegistration,UserRegistraionInfo)
 
 
 class OrderInfo(admin.ModelAdmin):
-    list_display=['user','product','total_price']
+    list_display=['user','product','quantity','total_price','order_date']
 
 admin.site.register(Order,OrderInfo)

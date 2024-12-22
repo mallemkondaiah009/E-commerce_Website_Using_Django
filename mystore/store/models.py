@@ -1,4 +1,7 @@
 from django.db import models
+from django.db import models
+#from .models import UserRegistration
+from .product import Product
 
 class UserRegistration(models.Model):
     GENDER_CHOICES = [
@@ -16,7 +19,7 @@ class UserRegistration(models.Model):
         return self.username
 
 from django.db import models
-from .models import UserRegistration
+#from .models import UserRegistration
 from .product import Product
 
 class Order(models.Model):
