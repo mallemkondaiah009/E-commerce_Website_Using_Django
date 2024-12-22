@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .product import Product
 from .category import Catogary
-from .models import UserRegistration
+from .models import Order, UserRegistration
 
 # Register your models here.
 class Categoryinfo(admin.ModelAdmin):
@@ -18,3 +18,9 @@ admin.site.register(Catogary,Categoryinfo)
 class UserRegistraionInfo(admin.ModelAdmin):
     list_display=['username','email','gender']
 admin.site.register(UserRegistration,UserRegistraionInfo)
+
+
+class OrderInfo(admin.ModelAdmin):
+    list_display=['user','product','total_price']
+
+admin.site.register(Order,OrderInfo)

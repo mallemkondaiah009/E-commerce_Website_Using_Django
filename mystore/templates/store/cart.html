@@ -121,7 +121,30 @@
             margin: 0;
             font-size: 0.9em;
         }
-        
+
+        .purchase-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Same gradient as the header */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .purchase-btn:hover {
+            background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverse gradient on hover */
+        }
+
+        .purchase-btn a {
+            text-decoration: none;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -168,7 +191,10 @@
                 </tr>
             </tbody>
         </table>
-       
+        
+        <button class="purchase-btn">
+            <a href="#">Purchase All</a>
+        </button>
     </div>
 
     <footer>

@@ -16,10 +16,21 @@ from django.contrib.auth.hashers import check_password
 from .models import UserRegistration
 
 
-# Create your views here.
+
+
 def home(request):
-    products=Product.objects.all()
-    return render(request,'store/home.html',{'products':products})
+    # Get the search query from the URL parameter (if it exists)
+    query = request.GET.get('query', '').strip()  # Default to empty string if no query
+    if query:
+        # Filter products by name, using case-insensitive matching
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        # If no query, show all products
+        products = Product.objects.all()
+
+    # Pass the products and query to the template
+    return render(request, 'store/home.html', {'products': products, 'query': query})
+
 
 
 
@@ -162,12 +173,37 @@ def checkout(request, product_id):
     return render(request, 'store/checkout.html', {'product': product})
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from .product import Product
+from .models import UserRegistration,Order
+
 def confirm_order(request):
     if request.method == 'POST':
         product_id = request.POST.get('product_id')
+        quantity = int(request.POST.get('quantity', 1))  # Get quantity from POST data, default to 1
         product = get_object_or_404(Product, id=product_id)
-        return render(request, 'store/order_success.html', {'product': product})
+        
+        # Assuming you have the currently logged-in user in the session
+        user_id = request.session.get('user_id')  # Replace with your authentication logic
+        user = get_object_or_404(UserRegistration, id=user_id)
+
+        # Calculate total price
+        total_price = product.price * quantity
+
+        # Save order in the database
+        order = Order.objects.create(
+            user=user,
+            product=product,
+            quantity=quantity,
+            total_price=total_price
+        )
+        order.save()
+
+        # Render success page
+        return render(request, 'store/order_success.html', {'product': product, 'order': order})
+    
     return redirect('home')  # Redirect to the home page for non-POST requests
+
 
 
 
