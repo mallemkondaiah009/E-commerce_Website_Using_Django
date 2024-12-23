@@ -205,6 +205,17 @@ def confirm_order(request):
     return redirect('home')  # Redirect to the home page for non-POST requests
 
 
+def profile(request):
+    if 'username' in request.session:
+        user = get_object_or_404(UserRegistration, username=request.session['username'])
+        orders = Order.objects.filter(user=user)  # Fetch orders for the logged-in user
+        return render(request, 'store/profile.html', {'user': user, 'orders': orders})
+    else:
+        messages.error(request, "You need to log in to view your profile.")
+        return redirect('login')
+
+
+
 
 
 
