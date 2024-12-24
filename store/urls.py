@@ -14,6 +14,6 @@ urlpatterns = [
     path('confirm_order/', views.confirm_order, name='confirm_order'),
     path('profile/',views.profile,name='profile'),
     path('', RedirectView.as_view(url='/home/', permanent=True), name='root'),
-    
+
 ]
 
