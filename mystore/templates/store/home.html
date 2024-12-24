@@ -5,11 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Store</title>
     <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes buttonHover {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.05);
+            }
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #eef2f3;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -91,6 +114,7 @@
             overflow: hidden;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .product-card:hover {
@@ -136,34 +160,33 @@
             margin-top: 10px;
         }
 
-        .buy-now {
+        .buy-now, .add-to-cart {
             display: inline-block;
             padding: 10px 25px;
-            background: linear-gradient(135deg, #2575fc, #6a11cb);
-            color: #fff;
             text-decoration: none;
             border-radius: 25px;
             font-size: 1em;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .buy-now {
+            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            color: #fff;
         }
 
         .buy-now:hover {
             background: linear-gradient(135deg, #6a11cb, #2575fc);
+            animation: buttonHover 0.3s forwards;
         }
 
         .add-to-cart {
-            display: inline-block;
-            padding: 10px 25px;
             background: linear-gradient(135deg, #28a745, #45d97b);
             color: #fff;
-            text-decoration: none;
-            border-radius: 25px;
-            font-size: 1em;
-            transition: background 0.3s ease;
         }
 
         .add-to-cart:hover {
             background: linear-gradient(135deg, #45d97b, #28a745);
+            animation: buttonHover 0.3s forwards;
         }
 
         footer {
@@ -179,35 +202,6 @@
             margin: 0;
             font-size: 0.9em;
         }
-                /* Flexbox layout to push footer to bottom */
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh; /* Full height of the viewport */
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #eef2f3;
-        }
-
-        main {
-            flex: 1; /* This makes sure the main content takes up available space */
-        }
-
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 30px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        footer p {
-            margin: 0;
-            font-size: 0.9em;
-        }
-
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>

@@ -47,7 +47,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             background: #fff;
@@ -60,90 +60,120 @@
             color: #333;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        th, td {
-            text-align: center;
-            padding: 12px;
-            border: 1px solid #ddd;
+        .cart-item {
+            background: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        th {
-            background-color: #f4f4f4;
-            font-weight: bold;
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
-        td {
-            font-size: 0.95em;
+        .cart-item-details {
+            flex: 1;
+            margin-left: 20px;
         }
 
-        tr:hover {
-            background-color: #f9f9f9;
+        .cart-item h2 {
+            font-size: 1.2em;
+            margin: 10px 0;
         }
 
-        .remove-btn {
-            background: linear-gradient(135deg, #ff4b1f, #ff9068);
+        .cart-item p {
+            margin: 5px 0;
+        }
+
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .remove-btn, .buy-btn {
             color: #fff;
             padding: 5px 10px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
-            transition: background 0.3s ease;
+            display: inline-block;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, #ff4b1f, #ff9068);
         }
 
         .remove-btn:hover {
             background: linear-gradient(135deg, #ff9068, #ff4b1f);
+            transform: scale(1.1);
         }
 
-        body, html {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
+        .buy-btn {
+            background: linear-gradient(135deg, #28a745, #218838);
         }
-        
+
+        .buy-btn:hover {
+            background: linear-gradient(135deg, #218838, #28a745);
+            transform: translateY(-5px);
+        }
+
+        .total-price {
+            font-size: 1.5em;
+            margin-top: 20px;
+            text-align: center;
+        }
+
         footer {
             background: #333;
             color: #fff;
             text-align: center;
             padding: 15px 0;
-            margin-top: auto;  /* This ensures the footer stays at the bottom */
+            margin-top: auto;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
         }
-        
+
         footer p {
             margin: 0;
             font-size: 0.9em;
         }
 
-        .purchase-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Same gradient as the header */
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            text-align: center;
-            transition: background 0.3s ease;
-            margin-top: 20px;
-        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
 
-        .purchase-btn:hover {
-            background: linear-gradient(135deg, #2575fc, #6a11cb); /* Reverse gradient on hover */
-        }
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-        .purchase-btn a {
-            text-decoration: none;
-            color: white;
+            .cart-item img {
+                margin-bottom: 10px;
+            }
+
+            .cart-item-details {
+                margin-left: 0;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
         }
     </style>
 </head>
@@ -159,42 +189,26 @@
 
     <div class="container">
         <h1>Your Cart</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
-                <tr>
-                    <td>
-                        <!-- Display the product image -->
-                        <img src="{{ item.image }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover;">
-                    </td>
-                    <td>{{ item.name }}</td>
-                    <td>₹{{ item.price }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>₹{{ item.total }}</td>
-                    <td>
-                        <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn">Remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr class="total-row">
-                    <td colspan="3">Total Price</td>
-                    <td colspan="2">₹{{ total_price }}</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <button class="purchase-btn">
-            <a href="#">Purchase All</a>
-        </button>
+        <div class="cart-items">
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <img src="{{ item.image }}" alt="{{ item.name }}">
+                <div class="cart-item-details">
+                    <h2>{{ item.name }}</h2>
+                    <p>Price: ₹{{ item.price }}</p>
+                    <p>Quantity: {{ item.quantity }}</p>
+                    <p>Total: ₹{{ item.total }}</p>
+                </div>
+                <div class="cart-item-actions">
+                    <a href="{% url 'remove_from_cart' item.id %}" class="remove-btn" aria-label="Remove {{ item.name }}">Remove</a>
+                    <a href="{% url 'checkout' item.id %}" class="buy-btn" aria-label="Buy {{ item.name }}">Buy</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="total-price">
+            Total Price: ₹{{ total_price }}
+        </div>
     </div>
 
     <footer>

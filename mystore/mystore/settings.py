@@ -132,3 +132,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 USE_TZ = True  # Enable timezone-aware datetime
 TIME_ZONE = 'Asia/Kolkata'  # Set your desired timezone
 
+
+
+
