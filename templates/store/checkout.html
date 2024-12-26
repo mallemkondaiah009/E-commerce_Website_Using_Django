@@ -10,8 +10,11 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
+            background: linear-gradient(135deg, #1f1c2c, #928dab);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -30,18 +33,35 @@
             letter-spacing: 1px;
         }
 
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ff9068;
+        }
+
         .container {
             max-width: 800px;
             margin: 40px auto;
             padding: 30px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
 
         h2 {
             text-align: center;
-            color: #333;
+            color: #fff;
             margin-bottom: 30px;
             font-size: 1.8em;
         }
@@ -51,6 +71,7 @@
             align-items: center;
             gap: 20px;
             margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .product-summary img {
@@ -69,7 +90,7 @@
         .product-name {
             font-size: 1.6em;
             margin: 10px 0;
-            color: #333;
+            color: #fff;
             font-weight: 700;
         }
 
@@ -81,7 +102,7 @@
 
         .product-desc {
             font-size: 1em;
-            color: #666;
+            color: #ccc;
         }
 
         .action-buttons {
@@ -98,9 +119,13 @@
             text-decoration: none;
             border-radius: 25px;
             text-align: center;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.3s ease;
             cursor: pointer;
             border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
         }
 
         .confirm {
@@ -124,7 +149,7 @@
             color: #fff;
             text-align: center;
             padding: 20px 0;
-            margin-top: 40px;
+            margin-top: auto;
             box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -132,11 +157,25 @@
             margin: 0;
             font-size: 0.9em;
         }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Checkout</h1>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+        </nav>
     </header>
 
     <main>
