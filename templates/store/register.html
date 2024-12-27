@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
         @keyframes fadeIn {
             from {
@@ -14,14 +15,27 @@
             }
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
+        @keyframes glowPulse {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(0, 255, 234, 0.8);
             }
-            to {
-                transform: translateY(0);
-                opacity: 1;
+            50% {
+                box-shadow: 0 0 30px rgba(0, 255, 234, 1);
+            }
+        }
+
+        @keyframes buttonGlow {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 255, 234, 0.8);
+            }
+            50% {
+                transform: scale(1.02);
+                box-shadow: 0 0 20px rgba(0, 255, 234, 1);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px rgba(0, 255, 234, 0.8);
             }
         }
 
@@ -29,25 +43,29 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #eef2f3;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
             animation: fadeIn 1s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
-            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            animation: slideIn 1s ease-in-out;
+            animation: fadeIn 1.2s ease-in-out;
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.8em;
-            letter-spacing: 1px;
+            font-size: 2em;
+            color: #00ffea;
+            text-shadow: 0 0 10px rgba(0, 255, 234, 0.8);
         }
 
         .nav-links {
@@ -58,30 +76,33 @@
 
         .nav-links a {
             text-decoration: none;
-            color: #fff;
+            color: #00ffea;
             padding: 8px 15px;
+            border: 2px solid #00ffea;
             border-radius: 20px;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: #00ffea;
+            color: #000;
         }
 
         .container {
             max-width: 500px;
             margin: 50px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1s ease-in-out;
+            background: rgba(0, 0, 0, 0.85);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 255, 234, 0.6);
+            animation: glowPulse 2s infinite;
         }
 
         h2 {
             text-align: center;
-            color: #333;
+            color: #00ffea;
             margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(0, 255, 234, 0.8);
         }
 
         form {
@@ -92,50 +113,53 @@
 
         label {
             font-weight: bold;
-            color: #555;
+            color: #00ffea;
         }
 
         input, select {
-            padding: 10px;
+            padding: 12px;
             font-size: 1em;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            outline: none;
-            transition: border-color 0.3s ease;
+            border: 2px solid #00ffea;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         input:focus, select:focus {
-            border-color: #6a11cb;
+            border-color: #00ffea;
+            box-shadow: 0 0 15px rgba(0, 255, 234, 0.8);
         }
 
         .btn {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #2575fc, #6a11cb);
+            padding: 12px;
+            background: linear-gradient(135deg, #00ffea, #004aad);
             color: #fff;
             border: none;
             border-radius: 25px;
-            font-size: 1em;
+            font-size: 1.2em;
             cursor: pointer;
-            transition: background 0.3s ease;
+            animation: buttonGlow 2s infinite;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         .btn:hover {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            transform: scale(1.05);
+            background: linear-gradient(135deg, #004aad, #00ffea);
         }
 
         footer {
-            background: #333;
-            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
             text-align: center;
-            padding: 15px 0;
-            margin-top: 30px;
-            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
-            animation: slideIn 1s ease-in-out;
+            padding: 20px;
+            margin-top: auto;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.3);
         }
 
         footer p {
             margin: 0;
             font-size: 0.9em;
+            color: #00ffea;
         }
     </style>
 </head>
@@ -179,7 +203,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 Store. All rights reserved.</p>
+        <p>&copy; 2024 Futuristic Store. All rights reserved.</p>
     </footer>
 </body>
 </html>
