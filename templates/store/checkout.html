@@ -10,15 +10,15 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #1f1c2c, #928dab);
-            color: #fff;
+            background: #f4f4f4;
+            color: #333;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
         header {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            background: #333;
             color: #fff;
             padding: 15px 30px;
             display: flex;
@@ -29,13 +29,7 @@
 
         header h1 {
             margin: 0;
-            font-size: 2em;
-            letter-spacing: 1px;
-        }
-
-        nav {
-            display: flex;
-            gap: 20px;
+            font-size: 1.5em;
         }
 
         nav a {
@@ -46,22 +40,21 @@
         }
 
         nav a:hover {
-            color: #ff9068;
+            color: #ffdd57;
         }
 
         .container {
             max-width: 800px;
             margin: 40px auto;
             padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
+            background: #fff;
             border-radius: 10px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
         }
 
         h2 {
             text-align: center;
-            color: #fff;
+            color: #333;
             margin-bottom: 30px;
             font-size: 1.8em;
         }
@@ -71,7 +64,6 @@
             align-items: center;
             gap: 20px;
             margin-bottom: 30px;
-            animation: fadeIn 1s ease-in-out;
         }
 
         .product-summary img {
@@ -90,7 +82,7 @@
         .product-name {
             font-size: 1.6em;
             margin: 10px 0;
-            color: #fff;
+            color: #333;
             font-weight: 700;
         }
 
@@ -102,7 +94,7 @@
 
         .product-desc {
             font-size: 1em;
-            color: #ccc;
+            color: #666;
         }
 
         .action-buttons {
@@ -129,19 +121,19 @@
         }
 
         .confirm {
-            background: linear-gradient(135deg, #28a745, #45d97b);
+            background: #28a745;
         }
 
         .confirm:hover {
-            background: linear-gradient(135deg, #45d97b, #28a745);
+            background: #218838;
         }
 
         .back {
-            background: linear-gradient(135deg, #ff4b1f, #ff9068);
+            background: #dc3545;
         }
 
         .back:hover {
-            background: linear-gradient(135deg, #ff9068, #ff4b1f);
+            background: #c82333;
         }
 
         footer {
@@ -156,17 +148,6 @@
         footer p {
             margin: 0;
             font-size: 0.9em;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
