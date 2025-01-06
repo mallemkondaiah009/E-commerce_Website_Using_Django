@@ -137,5 +137,8 @@ TIME_ZONE = 'Asia/Kolkata'  # Set your desired timezone
 
 
 
+RAZORPAY_API_KEY = 'rzp_test_MU47CjQHuTTZ7q'
+RAZORPAY_API_SECRET = 'w3WciKv1mLtACQZaGaRMhaaB'
+
 
 

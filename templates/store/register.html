@@ -52,7 +52,7 @@
         }
 
         .container {
-            max-width: 500px;
+            max-width: 450px; /* Reduced from 500px to 450px */
             margin: 50px auto;
             background: #fff;
             padding: 30px;
@@ -106,6 +106,23 @@
             background: #555;
         }
 
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #555;
+            text-decoration: underline;
+        }
+
         footer {
             background: #333;
             text-align: center;
@@ -118,29 +135,54 @@
             margin: 0;
             font-size: 0.9em;
         }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Register</h1>
-        <div class="nav-links">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'login' %}">Login</a>
-        </div>
-    </header>
-
     <main>
         <div class="container">
             <h2>Create an Account</h2>
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
             <form method="POST">
                 {% csrf_token %}
-                <label for="username">Username</label>
+                <label for="username"></label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
 
-                <label for="email">Email</label>
+                <label for="email"></label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required>
 
-                <label for="gender">Gender</label>
+                <label for="gender"></label>
                 <select id="gender" name="gender" required>
                     <option value="">Select Gender</option>
                     <option value="M">Male</option>
@@ -148,19 +190,18 @@
                     <option value="O">Other</option>
                 </select>
 
-                <label for="password">Password</label>
+                <label for="password"></label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
 
-                <label for="confirm_password">Confirm Password</label>
+                <label for="confirm_password"></label>
                 <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
 
                 <button type="submit" class="btn">Sign Up</button>
             </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            </div>
         </div>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Futuristic Store. All rights reserved.</p>
-    </footer>
 </body>
 </html>

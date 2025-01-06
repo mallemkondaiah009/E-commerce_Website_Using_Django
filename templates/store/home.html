@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Include CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -20,66 +22,110 @@
         header {
             background: #333;
             color: #fff;
-            padding: 10px 20px;
+            padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         header h1 {
             margin: 0;
-            font-size: 1.5em;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .nav-links a {
             text-decoration: none;
             color: #fff;
-            margin-left: 15px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .search-bar input {
-            padding: 5px;
+            padding: 8px 12px;
             font-size: 1em;
             border: 1px solid #ccc;
             border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            border-color: #007bff;
         }
 
         .search-bar button {
-            padding: 5px 10px;
-            background: #333;
+            padding: 8px 15px;
+            background: #007bff;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #0056b3;
         }
 
         .container {
             max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 100px auto 30px;
+            padding: 25px;
             background: #fff;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #333;
         }
 
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
         .product-card {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .product-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
         }
 
         .product-card img {
@@ -87,28 +133,43 @@
             height: auto;
             max-height: 200px;
             object-fit: contain;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            border-radius: 5px;
         }
 
         .product-name {
             font-size: 1.2em;
+            font-weight: 500;
             margin: 10px 0;
+            color: #333;
         }
 
         .product-price {
-            font-size: 1em;
+            font-size: 1.1em;
+            font-weight: 700;
             color: #28a745;
             margin: 10px 0;
         }
 
-        .action-buttons a {
-            display: inline-block;
-            padding: 10px 20px;
-            text-decoration: none;
+        .action-buttons {
+            display: flex;
+            justify-content: space-between; /* Align buttons to the edges */
+            gap: 10px; /* Add spacing between buttons */
+            margin-top: 15px;
+        }
+
+        .action-buttons a,
+        .action-buttons button {
+            flex: 1; /* Make buttons take equal width */
+            padding: 8px 12px; /* Decreased padding */
+            text-align: center;
+            border: none;
             border-radius: 5px;
-            font-size: 1em;
-            margin: 5px;
-            transition: background 0.3s;
+            font-size: 0.9em; /* Decreased font size */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            text-decoration: none; /* Remove underline from links */
         }
 
         .buy-now {
@@ -118,6 +179,7 @@
 
         .buy-now:hover {
             background: #0056b3;
+            transform: translateY(-2px);
         }
 
         .add-to-cart {
@@ -127,14 +189,16 @@
 
         .add-to-cart:hover {
             background: #218838;
+            transform: translateY(-2px);
         }
 
         footer {
             background: #333;
             color: #fff;
             text-align: center;
-            padding: 10px 0;
+            padding: 15px 0;
             margin-top: auto;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
 
         footer p {
@@ -156,7 +220,9 @@
                 <a href="{% url 'register' %}">Sign Up</a>
                 <a href="{% url 'login' %}">Login</a>
             {% endif %}
-            <a href="{% url 'cart' %}">Cart</a>
+            <a href="{% url 'cart' %}" id="cart-link">
+                Cart (<span id="cart-count">{{ cart|length }}</span>)
+            </a>
         </div>
         <div class="search-bar">
             <form method="GET" action="">
@@ -178,7 +244,7 @@
                             <div class="product-price">₹{{ product.price }}</div>
                             <div class="action-buttons">
                                 <a href="{% url 'checkout' product.id %}" class="buy-now">Buy Now</a>
-                                <a href="{% url 'add_to_cart' product.id %}" class="add-to-cart">Add to Cart</a>
+                                <button class="add-to-cart" data-product-id="{{ product.id }}">Add to Cart</button>
                             </div>
                         </div>
                     {% endfor %}
@@ -191,5 +257,43 @@
     <footer>
         <p>&copy; 2024 Store. All rights reserved.</p>
     </footer>
+
+    <script>
+        // JavaScript to handle "Add to Cart" button clicks
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                event.preventDefault(); // Prevent the default form submission
+
+                const productId = button.getAttribute('data-product-id'); // Get the product ID
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content'); // Get CSRF token
+
+                try {
+                    // Send an AJAX request to the server
+                    const response = await fetch(`/add_to_cart/${productId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': csrfToken // Include CSRF token
+                        },
+                        body: JSON.stringify({ product_id: productId })
+                    });
+
+                    const data = await response.json(); // Parse the JSON response
+
+                    if (data.status === 'success') {
+                        alert('Product added to cart successfully!');
+                        // Update the cart count dynamically
+                        const cartCount = Object.keys(data.cart).length;
+                        document.getElementById('cart-count').textContent = cartCount;
+                    } else {
+                        alert('Failed to add product to cart.');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while adding the product to the cart.');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

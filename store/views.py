@@ -1,5 +1,7 @@
+from http import client
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
+import razorpay
 from .product import Product
 from .models import UserRegistration
 from django.shortcuts import render, redirect
@@ -126,30 +128,47 @@ def cart_view(request):
     return render(request, 'store/cart.html', {'cart_items': cart_items, 'total_price': total_price})
 
 
+from django.shortcuts import get_object_or_404, redirect
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import Product  # Import your Product model
+
+@csrf_exempt  # Temporarily disable CSRF for testing (use proper CSRF handling in production)
 def add_to_cart(request, product_id):
-    # Retrieve the cart from the session, or initialize it if not present
-    cart = request.session.get('cart', {})
+    if request.method == 'POST':
+        # Retrieve the cart from the session, or initialize it if not present
+        cart = request.session.get('cart', {})
 
-    # Get the product from the database
-    product = get_object_or_404(Product, id=product_id)
+        # Get the product from the database
+        product = get_object_or_404(Product, id=product_id)
 
-    # If the product is already in the cart, increase its quantity
-    if str(product_id) in cart:
-        cart[str(product_id)]['quantity'] += 1
+        # If the product is already in the cart, increase its quantity
+        if str(product_id) in cart:
+            cart[str(product_id)]['quantity'] += 1
+        else:
+            # Add the product to the cart, including the image URL
+            cart[str(product_id)] = {
+                'name': product.name,
+                'price': str(product.price),
+                'quantity': 1,
+                'image': product.image.url if product.image else '',  # Add the image URL here
+            }
+
+        # Save the cart back to the session
+        request.session['cart'] = cart
+
+        # Return a JSON response indicating success
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Product added to cart!',
+            'cart': cart,  # Optionally return the updated cart data
+        })
     else:
-        # Add the product to the cart, including the image URL
-        cart[str(product_id)] = {
-            'name': product.name,
-            'price': str(product.price),
-            'quantity': 1,
-            'image': product.image.url if product.image else '',  # Add the image URL here
-        }
-
-    # Save the cart back to the session
-    request.session['cart'] = cart
-
-    # Redirect back to the home page or any other page
-    return redirect('home')  # Replace 'home' with the name of your desired URL pattern
+        # Return an error response if the request method is not POST
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Invalid request method.',
+        }, status=400)
 
 
 
@@ -213,6 +232,58 @@ def profile(request):
 
 
 
+# views.py
+
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.conf import settings
+import razorpay
+
+def create_order(request):
+    if request.method == 'POST':
+        amount = int(request.POST.get('amount')) * 100  # Amount in paise
+        currency = 'INR'
+        receipt = 'order_rcptid_11'
+
+        # Create a Razorpay Order
+        order = client.order.create({
+            'amount': amount,
+            'currency': currency,
+            'receipt': receipt,
+            'payment_capture': '1'  # Auto-capture payment
+        })
+
+        return JsonResponse({
+            'id': order['id'],
+            'amount': order['amount'],
+            'currency': order['currency'],
+            'key': settings.RAZORPAY_API_KEY
+        })
+
+    return render(request, 'payment.html')
+
+def payment_callback(request):
+    if request.method == 'POST':
+        razorpay_payment_id = request.POST.get('razorpay_payment_id')
+        razorpay_order_id = request.POST.get('razorpay_order_id')
+        razorpay_signature = request.POST.get('razorpay_signature')
+
+        # Verify the payment signature
+        params_dict = {
+            'razorpay_order_id': razorpay_order_id,
+            'razorpay_payment_id': razorpay_payment_id,
+            'razorpay_signature': razorpay_signature
+        }
+
+        try:
+            client.utility.verify_payment_signature(params_dict)
+            # Payment successful, update your database or perform other actions
+            return JsonResponse({'status': 'success'})
+        except razorpay.errors.SignatureVerificationError:
+            # Payment failed
+            return JsonResponse({'status': 'error', 'message': 'Invalid signature'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
 
