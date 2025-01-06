@@ -1,7 +1,6 @@
 from http import client
 from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
-import razorpay
 from .product import Product
 from .models import UserRegistration
 from django.shortcuts import render, redirect
@@ -232,58 +231,6 @@ def profile(request):
 
 
 
-# views.py
-
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from django.conf import settings
-import razorpay
-
-def create_order(request):
-    if request.method == 'POST':
-        amount = int(request.POST.get('amount')) * 100  # Amount in paise
-        currency = 'INR'
-        receipt = 'order_rcptid_11'
-
-        # Create a Razorpay Order
-        order = client.order.create({
-            'amount': amount,
-            'currency': currency,
-            'receipt': receipt,
-            'payment_capture': '1'  # Auto-capture payment
-        })
-
-        return JsonResponse({
-            'id': order['id'],
-            'amount': order['amount'],
-            'currency': order['currency'],
-            'key': settings.RAZORPAY_API_KEY
-        })
-
-    return render(request, 'payment.html')
-
-def payment_callback(request):
-    if request.method == 'POST':
-        razorpay_payment_id = request.POST.get('razorpay_payment_id')
-        razorpay_order_id = request.POST.get('razorpay_order_id')
-        razorpay_signature = request.POST.get('razorpay_signature')
-
-        # Verify the payment signature
-        params_dict = {
-            'razorpay_order_id': razorpay_order_id,
-            'razorpay_payment_id': razorpay_payment_id,
-            'razorpay_signature': razorpay_signature
-        }
-
-        try:
-            client.utility.verify_payment_signature(params_dict)
-            # Payment successful, update your database or perform other actions
-            return JsonResponse({'status': 'success'})
-        except razorpay.errors.SignatureVerificationError:
-            # Payment failed
-            return JsonResponse({'status': 'error', 'message': 'Invalid signature'})
-
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'})
 
 
 
