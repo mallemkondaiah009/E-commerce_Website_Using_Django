@@ -13,6 +13,7 @@ urlpatterns = [
     path('checkout/<int:product_id>/', views.checkout, name='checkout'),
     path('confirm_order/', views.confirm_order, name='confirm_order'),
     path('profile/',views.profile,name='profile'),
+    path('forgot_password/',views.forgot_pass_view,name='forgot_password'),
     path('', RedirectView.as_view(url='/home/', permanent=True), name='root'),
 
 ]

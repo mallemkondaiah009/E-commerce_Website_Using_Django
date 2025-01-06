@@ -232,5 +232,6 @@ def profile(request):
 
 
 
-
+def forgot_pass_view(request):
+    return render(request, 'store/forgot_password.html')
 
