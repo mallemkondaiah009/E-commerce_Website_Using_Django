@@ -182,11 +182,11 @@ def remove_from_cart(request, item_id):
         messages.error(request, "Item not found in cart.")
     return redirect('cart')  # Redirect to the cart page
 
-
+'''
 def checkout(request, product_id):
     product = Product.objects.get(id=product_id)  # Fetch product from the database
     return render(request, 'store/checkout.html', {'product': product})
-
+'''
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .product import Product
@@ -228,7 +228,6 @@ def profile(request):
     else:
         messages.error(request, "You need to log in to view your profile.")
         return redirect('login')
-
 
 
 

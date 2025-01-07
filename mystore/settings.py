@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store.apps.ShopConfig'
+    'store.apps.ShopConfig',
+    'payments.apps.PaymentsConfig',
 ]
 
 MIDDLEWARE = [
@@ -136,11 +137,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 USE_TZ = True  # Enable timezone-aware datetime
 TIME_ZONE = 'Asia/Kolkata'  # Set your desired timezone
 
+RAZORPAY_KEY_ID = "rzp_test_MU47CjQHuTTZ7q"
+RAZORPAY_KEY_SECRET = "w3WciKv1mLtACQZaGaRMhaaB"
 
-
-
-RAZORPAY_API_KEY = 'rzp_test_MU47CjQHuTTZ7q'
-RAZORPAY_API_SECRET = 'w3WciKv1mLtACQZaGaRMhaaB'
 
 
 
