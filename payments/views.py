@@ -7,11 +7,15 @@ from django.conf import settings
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Payment
 from store.product import Product
+from store.models import UserRegistration
 
 
 def checkout(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+    
+    user_id = request.session.get('user_id')
+    user = get_object_or_404(UserRegistration, id=user_id)
 
     # Create Razorpay order
     order = client.order.create({
@@ -24,7 +28,10 @@ def checkout(request, product_id):
     payment = Payment(
         order_id=order['id'],
         amount=product.price,
+        product_name=product,
+        user=user,
         status='created'
+
     )
     payment.save()
 

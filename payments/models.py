@@ -1,4 +1,6 @@
 from django.db import models
+from store.product import Product
+from store.models import UserRegistration
 
 # Create your models here.
 class Payment(models.Model):
@@ -8,6 +10,8 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=20, default='created')
     created_at = models.DateTimeField(auto_now_add=True)
+    product_name = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.ForeignKey(UserRegistration, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.order_id

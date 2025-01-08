@@ -117,27 +117,27 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Product Name</th>
                         <th>Order ID</th>
-                        <th>Product</th>
-                        <th>Name</th>
-                        <th>Quantity</th>
-                        <th>Total Price</th>
+                        <th>Payment ID</th>
+                        <th>Amount</th>
+                        <th>status</th>
                         <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for order in orders %}
                     <tr>
-                        <td>{{ order.id }}</td>
-                        <td><img src="{{ order.product.image.url }}" alt="{{ order.product.name }}" style="width: 50px; height: 50px;"></td>
-                        <td>{{ order.product.name }}</td>
-                        <td>{{ order.quantity }}</td>
-                        <td>₹{{ order.total_price }}</td>
-                        <td>{{ order.order_date|date:"Y-m-d H:i:s" }}</td>
+                        <td>{{ order.product_name.name }}</td>
+                        <td>{{ order.order_id }}</td>
+                        <td>{{ order.payment_id }}</td>
+                        <td>₹{{ order.amount }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>{{ order.created_at|date:"Y-m-d H:i:s" }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
+            </table>            
             {% else %}
             <p>No orders found.</p>
             {% endif %}

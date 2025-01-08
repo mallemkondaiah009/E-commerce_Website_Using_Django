@@ -186,7 +186,7 @@ def remove_from_cart(request, item_id):
 def checkout(request, product_id):
     product = Product.objects.get(id=product_id)  # Fetch product from the database
     return render(request, 'store/checkout.html', {'product': product})
-'''
+
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .product import Product
@@ -218,16 +218,28 @@ def confirm_order(request):
         return render(request, 'store/order_success.html', {'product': product, 'order': order})
     
     return redirect('home')  # Redirect to the home page for non-POST requests
+    '''
 
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
+from payments.models import Payment
+from store.models import UserRegistration
 
 def profile(request):
     if 'username' in request.session:
-        user = get_object_or_404(UserRegistration, username=request.session['username'])
-        orders = Order.objects.filter(user=user)  # Fetch orders for the logged-in user
-        return render(request, 'store/profile.html', {'user': user, 'orders': orders})
+        user_id = request.session.get('user_id')  # Replace with your authentication logic
+        user = get_object_or_404(UserRegistration, id=user_id)
+        orders = Payment.objects.filter(user=user)  # Fetch orders for the logged-in user
+
+        return render(request, 'store/profile.html', {
+            'user': user,
+            'orders': orders,
+        })
     else:
         messages.error(request, "You need to log in to view your profile.")
         return redirect('login')
+
 
 
 
