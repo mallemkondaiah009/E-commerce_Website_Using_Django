@@ -103,6 +103,9 @@ def login_view(request):
 def logout_view(request):
     if 'user_id' in request.session:
         request.session.flush()  # Clears the session data
+        messages.success(request, "You have been logged out successfully.")
+    else:
+        messages.error(request, "You are not logged in.")
     return redirect('login')  # Redirect to login page after logout
 
 

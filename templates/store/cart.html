@@ -186,14 +186,17 @@
     <div class="container">
         <h1>Your Cart</h1>
         {% if messages %}
-        <div class="messages" style="text-align: center; margin-bottom: 20px;">
+        <div class="messages" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
             {% for message in messages %}
-            <div class="alert" style="display: inline-block; background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+            <div class="alert" style="background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); transition: opacity 0.5s ease;">
             {{ message }}
             </div>
             <script>
             setTimeout(function() {
+            document.querySelector('.alert').style.opacity = '0';
+            setTimeout(function() {
                 document.querySelector('.alert').style.display = 'none';
+            }, 200);
             }, 2000);
             </script>
             {% endfor %}
