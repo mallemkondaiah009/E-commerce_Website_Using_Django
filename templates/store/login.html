@@ -118,13 +118,18 @@
     <div class="container">
         <h2>Log in</h2>
         {% if messages %}
-        <div class="messages">
+        <div class="messages" style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
             {% for message in messages %}
-            <div class="alert" style="background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+            <div class="alert" style="background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px; transition: opacity 0.5s ease;">
             {{ message }}
             </div>
             {% endfor %}
         </div>
+        <script>
+            setTimeout(function() {
+            document.querySelector('.messages').style.opacity = '0';
+            }, 5000);
+        </script>
         {% endif %}
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}

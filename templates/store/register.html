@@ -166,14 +166,22 @@
         <div class="container">
             <h2>Create an Account</h2>
             {% if messages %}
-            <div class="messages">
+            <div class="messages" style="position: fixed; top: 20px; right: 20px; width: 300px; z-index: 1000;">
                 {% for message in messages %}
-                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}">
+                <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %}" style="animation: fadeOut 5s forwards;">
                     {{ message }}
                 </div>
                 {% endfor %}
             </div>
             {% endif %}
+
+            <style>
+                @keyframes fadeOut {
+                    0% { opacity: 1; }
+                    80% { opacity: 1; }
+                    100% { opacity: 0; display: none; }
+                }
+            </style>
             <form method="POST">
                 {% csrf_token %}
                 <label for="username"></label>
