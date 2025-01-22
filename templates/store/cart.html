@@ -182,9 +182,23 @@
             <a href="{% url 'home' %}">Home</a>
         </div>
     </header>
-
+    
     <div class="container">
         <h1>Your Cart</h1>
+        {% if messages %}
+        <div class="messages" style="text-align: center; margin-bottom: 20px;">
+            {% for message in messages %}
+            <div class="alert" style="display: inline-block; background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+            {{ message }}
+            </div>
+            <script>
+            setTimeout(function() {
+                document.querySelector('.alert').style.display = 'none';
+            }, 2000);
+            </script>
+            {% endfor %}
+        </div>
+        {% endif %}
         <div class="cart-items">
             {% for item in cart_items %}
             <div class="cart-item">

@@ -40,16 +40,10 @@
         a:hover {
             background-color: #0056b3;
         }
-        img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 30px;
-        }
     </style>
 </head>
 <body>
     <h1>Thank You for Your Purchase!</h1>
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
     <p>Your order has been successfully placed for <strong>{{ product.name }}</strong>.</p>
     <a href="{% url 'home' %}">Back to Home</a>
 </body>

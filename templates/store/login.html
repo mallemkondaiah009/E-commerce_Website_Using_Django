@@ -117,6 +117,15 @@
 <body>
     <div class="container">
         <h2>Log in</h2>
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert" style="background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+            {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <form action="{% url 'login' %}" method="POST">
             {% csrf_token %}
             <input type="text" id="username" name="username" placeholder="Enter your username" required>

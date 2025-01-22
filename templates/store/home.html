@@ -231,6 +231,20 @@
             </form>
         </div>
     </header>
+    {% if messages %}
+        <div class="messages" style="position: fixed; top: 20px; right: 20px; z-index: 1001; width: 300px;">
+            {% for message in messages %}
+                <div class="alert" style="background-color: {% if message.tags == 'error' %}#f8d7da{% else %}#d4edda{% endif %}; padding: 10px; border-radius: 6px; margin-bottom: 10px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(() => {
+                document.querySelector('.messages').style.display = 'none';
+            }, 3000);
+        </script>
+    {% endif %}
 
     <main>
         <div class="container">

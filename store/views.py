@@ -83,7 +83,7 @@ def login_view(request):
         try:
             user = UserRegistration.objects.get(username=username)
         except UserRegistration.DoesNotExist:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "Please register an account first.")
             return render(request, "store/login.html")
 
         # Validate password

@@ -52,6 +52,7 @@ def payment_success(request):
         payment.payment_id = payment_id
         payment.status = "success"
         payment.save()
-        return render(request, "payments/success.html", {"payment": payment})
+        product = payment.product_name
+        return render(request, "payments/success.html", {"payment": payment, "product": product})
     except Payment.DoesNotExist:
         return render(request, "error.html", {"message": "Payment not found!"})

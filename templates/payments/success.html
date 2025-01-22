@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,59 +21,77 @@
 
         .container {
             background: #fff;
-            padding: 30px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 500px;
+            max-width: 800px; /* Increased from 600px to 800px */
             width: 100%;
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: #28a745;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .box {
             background: #fff;
             border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
+            padding: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: left;
+            flex: 1;
         }
 
         .box img {
             width: 100%;
-            max-width: 200px;
+            max-width: 150px;
             border-radius: 10px;
             display: block;
-            margin: 0 auto 20px;
+            margin: 0 auto 10px;
         }
 
         .box h2 {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             text-align: center;
         }
 
-        .box p {
-            font-size: 1.1rem;
-            color: #555;
-            margin: 10px 0;
+        .box table {
+            width: 100%;
+            border-collapse: collapse;
         }
 
-        .box strong {
-            color: #333;
+        .box table,
+        .box th,
+        .box td {
+            border: 1px solid #ddd;
+        }
+
+        .box th,
+        .box td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .box th {
+            background-color: #f2f2f2;
         }
 
         .btn {
             display: inline-block;
             margin-top: 20px;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 10px 20px;
+            font-size: 0.9rem;
             color: #fff;
             background: #007bff;
             border: none;
@@ -93,48 +112,78 @@
 
         .success-icon {
             display: inline-block;
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             background: #28a745;
             border-radius: 50%;
             position: relative;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .success-icon::before {
             content: "✓";
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: #fff;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
+        .copy-btn {
+            background: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #0056b3;
+        }
     </style>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('Copied to clipboard: ' + text);
+            }, function(err) {
+                alert('Failed to copy text: ', err);
+            });
+        }
+    </script>
 </head>
+
 <body>
     <div class="container">
-        <!-- Round Tick Mark -->
         <div class="success-icon"></div>
-
         <h1>Payment Successful</h1>
-
-        <!-- Product Image Box -->
-        <div class="box">
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
-            <h2>{{ product.name }}</h2>
+        <div class="flex-container">
+            <div class="box">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                <h2>{{ product.name }}</h2>
+            </div>
+            <div class="box">
+                <h2>Payment Details</h2>
+                <table>
+                    <tr>
+                        <th>Order ID</th>
+                        <td>{{ payment.order_id }} <button class="copy-btn" onclick="copyToClipboard('{{ payment.order_id }}')">Copy</button></td>
+                    </tr>
+                    <tr>
+                        <th>Payment ID</th>
+                        <td>{{ payment.payment_id }} <button class="copy-btn" onclick="copyToClipboard('{{ payment.payment_id }}')">Copy</button></td>
+                    </tr>
+                    <tr>
+                        <th>Amount Paid</th>
+                        <td>₹{{ payment.amount }}</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-
-        <!-- Payment Details Box -->
-        <div class="box">
-            <h2>Payment Details</h2>
-            <p><strong>Order ID:</strong> {{ payment.order_id }}</p>
-            <p><strong>Payment ID:</strong> {{ payment.payment_id }}</p>
-            <p><strong>Amount Paid:</strong> ₹{{ payment.amount }}</p>
-        </div>
-
-        <!-- Back to Home Button -->
         <a href="{% url 'home' %}" class="btn">Back to Home</a>
     </div>
 </body>
+
 </html>
