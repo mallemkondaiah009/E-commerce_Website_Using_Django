@@ -79,8 +79,12 @@ WSGI_APPLICATION = 'mystore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mystore',
+        'USER': 'root',
+        'PASSWORD': 'smk4305@m',
+        'HOST': '127.0.0.1',  # Set to 'localhost' if using locally
+        'PORT': '3306',  # Default is '3306'
     }
 }
 
