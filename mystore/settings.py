@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-7eo_*_1taozt+j^p=#f0u##wi#aryqydznqo(p+5&0jy!)sqdp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['e-commerce-website-using-django.onrender.com','127.0.0.1:8000','127.0.0.1:5432','smk-kart.onrender.com']
+ALLOWED_HOSTS = ['e-commerce-website-using-django.onrender.com','127.0.0.1:8000','127.0.0.1','smk-kart.onrender.com']
 
 
 # Application definition
@@ -79,12 +79,8 @@ WSGI_APPLICATION = 'mystore.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mystore',
-        'USER': 'postgres',
-        'PASSWORD': 'smk4305@p',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
