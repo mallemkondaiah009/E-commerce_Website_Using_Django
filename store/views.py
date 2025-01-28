@@ -15,6 +15,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
 from .models import UserRegistration
+from .category import Catogary
 
 
 
@@ -29,8 +30,11 @@ def home(request):
         # If no query, show all products
         products = Product.objects.all()
 
-    # Pass the products and query to the template
-    return render(request, 'store/home.html', {'products': products, 'query': query})
+    # Get all categories from the database
+    categories = Catogary.objects.all()
+
+    # Pass the products, categories, and query to the template
+    return render(request, 'store/home.html', {'products': products, 'categories': categories, 'query': query})
 
 
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Store - Modern Shopping Experience</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token }}">
     <style>
         :root {
@@ -67,6 +67,7 @@
             font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
+            font-family: 'Merriweather', serif;
         }
 
         .search-form {
@@ -151,10 +152,48 @@
         .container {
             max-width: var(--container-width);
             margin: 0 auto;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
             background: var(--card-background);
             border-radius: 0.75rem;
             box-shadow: var(--shadow);
-            padding: 2rem;
+            padding: 1.5rem;
+        }
+
+        .sidebar h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-family: 'Merriweather', serif;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: color 0.2s ease;
+        }
+
+        .sidebar ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .products-section {
+            flex-grow: 1;
         }
 
         .section-title {
@@ -162,6 +201,7 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             color: var(--text-primary);
+            font-family: 'Merriweather', serif;
         }
 
         .products-grid {
@@ -356,6 +396,14 @@
             main {
                 margin-top: calc(var(--header-height) * 1.5);
             }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
         }
 
         @media (max-width: 600px) {
@@ -406,41 +454,56 @@
 
     <main>
         <div class="container">
-            <h2 class="section-title">Products</h2>
-            <div class="products-grid">
-                {% if products %}
-                    {% for product in products %}
-                        <div class="product-card">
-                            <div class="product-image-container">
-                                <img
-                                    class="product-image"
-                                    src="{{ product.image.url }}"
-                                    alt="{{ product.name }}"
-                                    loading="lazy"
-                                >
-                            </div>
-                            <div class="product-content">
-                                <h3 class="product-name">{{ product.name }}</h3>
-                                <p class="product-price">₹{{ product.price }}</p>
-                                <div class="product-actions">
-                                    <a href="{% url 'checkout' product.id %}" class="button button-primary">
-                                        Buy Now
-                                    </a>
-                                    <button
-                                        class="button button-success add-to-cart"
-                                        data-product-id="{{ product.id }}"
+            <!-- Sidebar for Categories -->
+            <aside class="sidebar">
+                <h3>Categories</h3>
+                <ul>
+                    {% for category in categories %}
+                        <li>
+                            {{ category.name }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </aside>
+
+            <!-- Products Section -->
+            <div class="products-section">
+                <h2 class="section-title">Products</h2>
+                <div class="products-grid">
+                    {% if products %}
+                        {% for product in products %}
+                            <div class="product-card">
+                                <div class="product-image-container">
+                                    <img
+                                        class="product-image"
+                                        src="{{ product.image.url }}"
+                                        alt="{{ product.name }}"
+                                        loading="lazy"
                                     >
-                                        Add to Cart
-                                    </button>
+                                </div>
+                                <div class="product-content">
+                                    <h3 class="product-name">{{ product.name }}</h3>
+                                    <p class="product-price">₹{{ product.price }}</p>
+                                    <div class="product-actions">
+                                        <a href="{% url 'checkout' product.id %}" class="button button-primary">
+                                            Buy Now
+                                        </a>
+                                        <button
+                                            class="button button-success add-to-cart"
+                                            data-product-id="{{ product.id }}"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-state">
+                            <p>No products found for "{{ query }}"</p>
                         </div>
-                    {% endfor %}
-                {% else %}
-                    <div class="empty-state">
-                        <p>No products found for "{{ query }}"</p>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
         </div>
     </main>
