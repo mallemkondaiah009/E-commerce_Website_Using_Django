@@ -166,8 +166,6 @@
                 <thead>
                     <tr>
                         <th>Product Name</th>
-                        <th>Order ID</th>
-                        <th>Payment ID</th>
                         <th>Amount</th>
                         <th>Status</th>
                         <th>Date</th>
@@ -177,8 +175,6 @@
                     {% for order in orders %}
                     <tr>
                         <td>{{ order.product_name.name }}</td>
-                        <td>{{ order.order_id }}</td>
-                        <td>{{ order.payment_id }}</td>
                         <td>₹{{ order.amount }}</td>
                         <td>{{ order.status }}</td>
                         <td>{{ order.created_at|date:"Y-m-d H:i:s" }}</td>
