@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout - Store</title>
+    <title>Checkout | Store</title>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -188,7 +188,7 @@
             "key": "{{ razorpay_key }}",
             "amount": "{{ product.price|floatformat:2 }} * 100",
             "currency": "INR",
-            "name": "Your Store Name",
+            "name": "SMK-KART",
             "description": "Purchase of {{ product.name }}",
             "image": "https://example.com/logo.png",
             "order_id": "{{ razorpay_order_id }}",
